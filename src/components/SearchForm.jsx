@@ -6,10 +6,13 @@ export default function SearchForm()
     const [from, setFrom] = useState('');
     const [to, setTo] = useState('');
     const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!from || !to) return;
         navigate(`/results?from=${from}&to=${to}`);
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <label>
