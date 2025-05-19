@@ -6,5 +6,4 @@ export default function FlightCard({ flight }) {
             <p>Price: ${flight.price}</p>
         </div>
     );
-   <p></p> 
 }
