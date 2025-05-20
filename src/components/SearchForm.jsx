@@ -14,16 +14,20 @@ export default function SearchForm()
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                From: <input type="text" value={from} onChange={(e) => setFrom(e.target.value)} />
-            </label>
+        <form className="container mt-4 p-4 border rounded" style={{ maxWidth: "450px" }} onSubmit={handleSubmit}>
+            <div class="mb-3">
+                <label class="form-label">From: </label>
+                <input class="form-control" type="text" value={from} onChange={(e) => setFrom(e.target.value)} />
+            </div>
             <br />
-            <label>
-                To: <input type="text" value={to} onChange={(e) => setTo(e.target.value)} />
-            </label>
+            <div class="mb-3">
+                <label class="form-label"> To:</label>
+                <input class="form-control" type="text" value={to} onChange={(e) => setTo(e.target.value)} />
+            </div>
             <br />
-            <button type="submit">Search Flights</button>
+            <div className="d-flex justify-content-end mt-4">
+                <button type="submit" class="btn btn-primary">Search Flights</button>
+            </div>
         </form>
     );
 }
