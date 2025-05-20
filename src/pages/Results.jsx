@@ -34,9 +34,9 @@ export default function Results() {
     
     return (
         <div>
-            <h2>Flights from {from} to {to}</h2>
+            <h2 class="text-light bg-dark">Flights from {from} to {to}</h2>
             <FlightList flights={flights} />
-            <Link to="/"><button>Back to Search</button></Link>
+            <Link to="/"><button class="btn btn-secondary">Back to Search</button></Link>
          </div>
     );
 }
