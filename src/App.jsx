@@ -14,7 +14,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/auth/me',{
+    fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`,{
       credentials: 'include'
     })
     .then(res => res.ok ? res.json():null)
