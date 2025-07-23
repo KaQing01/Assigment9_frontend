@@ -6,6 +6,9 @@ function Profile() {
     useEffect(() => {
         fetch(`${import.meta.env.VITE_API_URL}/api/auth/me`, {
         credentials: 'include',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
     })
     .then(res => res.json())
     .then(data => setUser(data));
