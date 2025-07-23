@@ -3,33 +3,41 @@ import { useEffect, useState } from 'react';
 import FlightList from '../components/FlightList';
 import NoResults from '../components/NoResults';
 import { Link } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
+
+const GET_FLIGHTS = gql`
+    query GetFlights($from: String, $to: String) {
+        flights(from: $from, to: $to) {
+            id
+            from
+            to
+            price
+            airline
+            departureTime
+        }
+    }
+`;
 
 export default function Results() {
     const [searchParams] = useSearchParams();
     const from = searchParams.get('from');
     const to = searchParams.get('to');
+
+    if (!from || !to) {
+        return <p>Waiting for search
+        parameters...</p>;
+    }
+
+    const { loading, error, data } =
+    useQuery(GET_FLIGHTS, {
+        variables: { from, to },
+    });
     
-    const [flights, setFlights] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    
-    useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            fetch('/src/data/flights.json')
-            .then((res) => res.json())
-            .then((data) => {
-                const results = data.filter(
-                    (flight) =>
-                        flight.from.toLowerCase() === from.toLowerCase() &&
-                        flight.to.toLowerCase() === to.toLowerCase()
-                );
-                setFlights(results);
-                setIsLoading(false);
-            });
-        },1000);
-    }, [from, to]);
-    
-    if (isLoading) return <p>Loading flights...</p>;
+    if (loading) return <p>Loading flights...</p>;
+    if (error) return <p>Error loading flights.</p>;
+
+    const flights = data?.flights || [];
+
     if (flights.length === 0) return <NoResults from={from} to={to} />;
     
     return (
